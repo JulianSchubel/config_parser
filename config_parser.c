@@ -20,7 +20,7 @@ struct system_message {
     const char * const message;
 };
 
-/* Status code numbers and their index in error_table must align */
+/* Status code numbers and their index in status_table must align */
 struct system_message status_table[] = {
     {0, "Success"},
     {1, "Unmatched opening bracket '['"},
