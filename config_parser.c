@@ -16,7 +16,7 @@ enum config_parser_system_codes_ {
 };
 
 struct system_message {
-    enum config_parser_system_codes_ error_code;
+    enum config_parser_system_codes_ status_code;
     const char * const message;
 };
 
