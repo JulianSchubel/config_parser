@@ -1,3 +1,12 @@
+/*  
+  ____ ___  _   _ _____ ___ ____   ____   _    ____  ____  _____ ____  
+ / ___/ _ \| \ | |  ___|_ _/ ___| |  _ \ / \  |  _ \/ ___|| ____|  _ \ 
+| |  | | | |  \| | |_   | | |  _  | |_) / _ \ | |_) \___ \|  _| | |_) |
+| |__| |_| | |\  |  _|  | | |_| | |  __/ ___ \|  _ < ___) | |___|  _ < 
+ \____\___/|_| \_|_|   |___\____| |_| /_/   \_\_| \_\____/|_____|_| \_\
+                                                                       
+ */
+
 #include "./config_parser.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,22 +19,16 @@ unsigned int system_status_code = 0;
 
 enum config_parser_system_codes_ {
     SUCCESS = 0,
-    UNMATCHED_OPENING_BRACKET_IN_SECTION_HEADING = 1,
-    UNMATCHED_CLOSING_BRACKET_IN_SECTION_HEADING = 2,
-    UNABLE_TO_FIND_KEY = 3
 };
 
 struct system_message {
-    enum config_parser_system_codes_ status_code;
+    enum config_parser_system_codes_ error_code;
     const char * const message;
 };
 
-/* System code numbers and their index in status_table must align */
+/* Status code numbers and their index in error_table must align */
 struct system_message status_table[] = {
     {0, "Success"},
-    {1, "Unmatched opening bracket '['"},
-    {2, "Unmatched closing bracket ']'"},
-    {3, "Syntax error: no value provided for key"}
 };
 
 static void initialize_config(struct config_t *config) {
@@ -167,27 +170,13 @@ struct config_t * deserialize_config(const char *config_path) {
         while((c = line[i++]) == ' ' || c == '\t') {
             ;
         }
-        int bracket_counter = 0;
         if(c == '[') {
             ++section_count;
-            ++bracket_counter;
             temporary_buffer_index = 0;
             /* Read section heading value */ 
-            while((c = line[i++]) != '\n' && temporary_buffer_index < TEMPORARY_BUFFER_SIZE-1) {
+            while((c = line[i++]) != '\n' && c != ']' && temporary_buffer_index < TEMPORARY_BUFFER_SIZE-1) {
                 /* count brackets to check that the section heading is enclosed */
-                if(c == '[') {
-                    ++bracket_counter;
-                }
-                if(c == ']') {
-                    --bracket_counter;
-                }
                 temporary_buffer[temporary_buffer_index++] = c;
-            }
-            if(bracket_counter < 0) {
-                system_status_code = 2;    
-            }
-            if(bracket_counter > 0) {
-                system_status_code = 1;
             }
             temporary_buffer[temporary_buffer_index++] = '\0';
 
@@ -209,10 +198,6 @@ struct config_t * deserialize_config(const char *config_path) {
                     temporary_buffer[temporary_buffer_index++] = c;
                     c = line[i++];
                 }
-                if(c == '\n') {
-                    system_status_code = 5;
-                }
-
                 temporary_buffer[temporary_buffer_index++] = '\0';
                 /* Write key to storage */
                 config->lookup_table[section_count-1].key_value_pairs[(key_counts[section_count-1])-1].key = (char*) malloc(sizeof(char) * temporary_buffer_index);
