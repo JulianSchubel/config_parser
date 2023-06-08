@@ -1,6 +1,6 @@
 # Config Parser  
 
-A library to deserialize a configuration file conforming to the below:  
+A library to deserialize a configuration file as per the below rules:  
 
 > Leading whitespace in a line is ignored. All other whitespace is considered as part of the section heading, key, or value.  
 > Section headings are text from an initial '[' to a ']'. Any other characters after the closing bracket will be ignored.  
