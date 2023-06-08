@@ -86,10 +86,6 @@ static void output_system_message() {
 }
 
 struct config_t * deserialize_config(const char *config_path) {
-    /* Allocate a config object on the heap */
-    struct config_t *config = (struct config_t *) malloc(sizeof(struct config_t));
-    initialize_config(config);
-
     extern unsigned int system_status_code;
 
     /* Open a file pointer */
@@ -100,6 +96,10 @@ struct config_t * deserialize_config(const char *config_path) {
         perror("Unable to open file");
         exit(EXIT_FAILURE);
     }
+
+    /* Allocate a config object on the heap */
+    struct config_t *config = (struct config_t *) malloc(sizeof(struct config_t));
+    initialize_config(config);
 
     /* Initialize counters */
     unsigned int section_count = 0;
@@ -139,7 +139,7 @@ struct config_t * deserialize_config(const char *config_path) {
         config->key_counts[i] = key_counts[i];
     }
 
-    /* Have the number of sections and key=value pairs: can allocate memory lookup_table and each key_value_pairs array */
+    /* Have the number of sections and key=value pairs: can allocate memory for lookup_table and each key_value_pairs array */
     config->lookup_table = (struct section_t *) malloc(sizeof(struct section_t) * section_count);
     for(unsigned int i = 0; i < section_count; ++i) {
         config->lookup_table[i].key_value_pairs = (struct key_pair_t *) malloc(sizeof(struct key_pair_t) * key_counts[i]);
