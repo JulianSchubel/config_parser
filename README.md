@@ -11,11 +11,12 @@ A library to deserialize a configuration file as per the below:
 
 Given a config file as below:  
 
-> [SECTION A]
-> key1=value A1
-> key2=value A2
->
-> [SECTION B]
->    key1=value B1
->    key2=value B2
+```
+[SECTION A]
+key1=value A1
+key2=value A2
 
+[SECTION B]
+    key1=value B1
+    key2=value B2
+```
