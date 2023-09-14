@@ -9,7 +9,7 @@ A library to deserialize a configuration file as per the below:
 
 ## Usage  
 
-Given a config file as below:  
+Given a config file my\_config.cfg with contents as below:  
 
 ```
 [SECTION A]
@@ -19,4 +19,36 @@ key2=value A2
 [SECTION B]
     key1=value B1
     key2=value B2
+```
+
+The following code snippet
+
+```
+#include "./config_parser.h"
+
+int main(int argc, char *argv[])
+{
+
+    struct config_t * conf = deserialize_config("./my_config.cfg");
+    char * value = lookup_value(conf, "SECTION A", "key1");
+    printf("%s\n", value);
+    value = lookup_value(conf, "SECTION B", "key1");
+    printf("%s\n", value);
+    return EXIT_SUCCESS;
+}
+```
+
+produces the result
+
+```
+value A1
+value B1
+```
+
+## Compilation
+
+Simply add the source file for linkage. E.g.
+
+```
+gcc main.c config_parser.c
 ```
