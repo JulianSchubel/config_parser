@@ -1,6 +1,6 @@
 # .cfg / .ini Parser 
 
-A simple deserializer of configuration files:  
+A simple deserializer of configuration files.
 
 Note the following:
 
