@@ -1,6 +1,8 @@
 # .cfg / .ini Parser 
 
-A library to deserialize a configuration file as per the below:  
+A simple deserializer of configuration files:  
+
+Note the following:
 
 - Leading whitespace in a line is ignored. All other whitespace (excluding \n) is considered as part of the section heading, key, or value.
 - Section headings are text from an initial '[' to the first ']'. Any other characters after this closing bracket will be ignored.  
