@@ -51,6 +51,6 @@ value B1
 
 Simply add the source file for linkage. E.g.
 
-```
+```c
 gcc main.c config_parser.c
 ```
