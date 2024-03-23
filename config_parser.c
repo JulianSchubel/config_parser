@@ -182,7 +182,6 @@ struct config_t * deserialize_config(const char *config_path) {
 
             /* Write the section heading to storage */
             config->lookup_table[section_count-1].section = (char *) malloc(sizeof(char) * temporary_buffer_index);
-            config->lookup_table[section_count-1].section_index = 0;
             for(unsigned int j = 0; j < temporary_buffer_index; ++j) {
                 config->lookup_table[section_count-1].section[j] = temporary_buffer[j];
             }

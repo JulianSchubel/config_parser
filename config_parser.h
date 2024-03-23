@@ -18,7 +18,6 @@ struct key_pair_t {
 
 struct section_t {
    char *section; 
-   unsigned int section_index;
    struct key_pair_t *key_value_pairs;
 };
 
